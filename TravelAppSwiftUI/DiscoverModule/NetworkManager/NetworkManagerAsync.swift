@@ -7,7 +7,9 @@
 
 import Foundation
 
-class NetworkManagerAsync{
+
+final class NetworkManagerAsync {
+    static let shared = NetworkManagerAsync(); private init() {}
     let photoApiKey = "cPbP9CvODNveDaCsh72J61E62xzIsLUbpTpVOCJPbbs"
     let cityApiKey = "f69b9f26ce034121a15a2cb987a9a5aa"
     
@@ -48,13 +50,10 @@ class NetworkManagerAsync{
             throw URLError.badURL
         }
         
-        
         let responce = try await URLSession.shared.data(from: url)
-        print(responce)
         let decoder = JSONDecoder()
         let result = try decoder.decode(ResponceImage.self, from: responce.0)
         
         return result
     }
-    
 }

@@ -10,4 +10,7 @@ import Foundation
 enum Screen: Hashable {
     case discover
     case detail(productIndex: Int)
+    case logIn
+    case registration
+    case profile
 }

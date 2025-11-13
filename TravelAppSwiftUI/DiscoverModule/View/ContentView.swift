@@ -11,6 +11,7 @@ import SwiftUI
 struct ContentView: View {
     @State private var path: [Screen] = []
     @State var discoverVM = DiscoverViewModel()
+    @EnvironmentObject var authViewModel: AuthViewModel
     var body: some View {
         NavigationStack(path: $path) {
             GeometryReader { geo in
@@ -37,10 +38,25 @@ struct ContentView: View {
                         DiscoverView(discoverVM: discoverVM, path: $path)
                     case .detail(let productIndex):
                         ProductDetailView(discoverVM: discoverVM, product: $discoverVM.products[productIndex])
+                    case .logIn:
+                        LoginView(path: $path)
+                    case .registration:
+                        RegistrationView()
+                    case .profile:
+                        ProfileView()
+                    }
+                }
+                .onChange(of: authViewModel.userSession) { oldValue, newValue in
+                    if newValue != nil {
+                        path = [.profile]
+                    } else {
+                        path = [.logIn]
                     }
                 }
             }
+            
         }
+       
     }
 }
 
@@ -79,6 +95,7 @@ struct MainViewContent: View {
                     .background(.main)
                     .clipShape(RoundedRectangle(cornerRadius: 25))
                     .padding(.leading, 38)
+                    
                     Spacer()
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)

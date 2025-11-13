@@ -11,7 +11,7 @@ import SwiftUI
 
 struct Product: Identifiable, Hashable {
 
-    var id = UUID()
+    var id: UUID
     var image: UIImage
     var title: String
     var rating: Int

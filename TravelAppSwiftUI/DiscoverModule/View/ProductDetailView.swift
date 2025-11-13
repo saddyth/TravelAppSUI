@@ -15,10 +15,19 @@ struct ProductDetailView: View {
     var body: some View {
         GeometryReader { geo in
             ZStack(alignment: .top) {
-                Image(uiImage: product.image)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: geo.size.width, height: geo.size.height * 0.6)
+                if let imageURL = product.imageURL {
+                    KFImage(imageURL)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: geo.size.width, height: geo.size.height * 0.6)
+                        .clipShape(RoundedRectangle(cornerRadius: 19))
+                } else {
+                    Image(.placeholder)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: geo.size.width, height: geo.size.height * 0.6)
+                        .clipShape(RoundedRectangle(cornerRadius: 19))
+                }
                 VStack{
                     ScrollView(.vertical, showsIndicators: false) {
                         ZStack{
@@ -155,6 +164,5 @@ struct ProductDetailView: View {
 }
 
 #Preview {
-    ProductDetailView(
-        discoverVM: DiscoverViewModel(), product: .constant(Product(image: .placeholder , title: "Mount", rating: 5, place: "Japan", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dignissim eget amet viverra eget fames rhoncus. Eget enim venenatis enim porta egestas malesuada et. Consequat mauris lacus euismod montes.", price: 469, isLiked: false, filterApi: "fdkfsdkfl", imageURL: URL(string: "https://ralfvanveen.com/wp-content/uploads/2021/06/Placeholder-_-Glossary.svg")!, category: [Category(name: "All")])))
+    ProductDetailView(discoverVM: DiscoverViewModel(), product: .constant(Product(id: UUID(uuidString: "F3EA4AA6-1048-4BFD-87FF-785EA604AF83")!,image: .placeholder, title: "Japan", rating: 4, place: "Ffkd", description: "dkdkfl", price: 469, isLiked: false, filterApi: "fkdfkdf", category: [Category(name: "All"), Category(name: "Popular")])))
 }
